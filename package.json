@@ -1,0 +1,214 @@
+{
+  "name": "neatJSON",
+  "displayName": "NeatJSON",
+  "description": "JSON formatter with great configurability",
+  "version": "0.5.0",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:neatJSON.helloWorld"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "category": "NeatJSON",
+        "command": "neatJSON.formatDocument",
+        "title": "Format Document"
+      },
+      {
+        "category": "NeatJSON",
+        "command": "neatJSON.formatSelection",
+        "title": "Format Selection"
+      },
+      {
+        "category": "NeatJSON",
+        "command": "neatJSON.formatWith",
+        "title": "Format With…"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "neatJSON.formatDocument",
+          "when": "editorLangId == json"
+        },
+        {
+          "command": "neatJSON.formatSelection",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "neatJSON.formatWith",
+          "when": "editorLangId == json || editorHasSelection"
+        }
+      ]
+    },
+    "configuration": [
+      {
+        "title": "Default Formatting",
+        "properties": {
+          "neatJSON.wrapLines": {
+            "description": "Wrap long lines?",
+            "type": "boolean",
+            "default": true
+          },
+          "neatJSON.wrapLines.wrapWidth": {
+            "description": "Wrap lines after this many characters",
+            "type": "integer",
+            "default": 80
+          },
+          "neatJSON.indent.usingTabs": {
+            "description": "Use tabs instead of spaces for indentation?",
+            "type": "boolean",
+            "default": true
+          },
+          "neatJSON.indent.amount": {
+            "description": "Number of spaces or tabs to use at each indent level",
+            "type": "integer",
+            "default": 1
+          },
+          "neatJSON.indent.indentLast": {
+            "description": "Indent the closing bracket/brace for arrays and objects?",
+            "type": "boolean",
+            "default": false
+          },
+          "neatJSON.short": {
+            "description": "Put opening brackets on the same line as the first value, closing brackets on the same line as the last value?",
+            "type": "boolean",
+            "default": false
+          },
+          "neatJSON.sort": {
+            "description": "Sort objects' keys in alphabetical order?",
+            "type": "boolean",
+            "default": false
+          },
+          "neatJSON.alignColons": {
+            "description": "When wrapping objects, line up the colons (per object)?",
+            "type": "boolean",
+            "default": false
+          },
+          "neatJSON.arrayPadding": {
+            "markdownDescription": "Number of spaces to put inside brackets for arrays.",
+            "type": "integer",
+            "default": 0
+          },
+          "neatJSON.objectPadding": {
+            "description": "Number of spaces to put inside braces for objects.",
+            "type": "integer",
+            "default": 0
+          },
+          "neatJSON.spacesBeforeCommas": {
+            "description": "Number of spaces to put before commas for values on the same line (for both arrays and objects).",
+            "type": "integer",
+            "default": 0
+          },
+          "neatJSON.spacesAfterCommas": {
+            "description": "Number of spaces to put after commas for values on the same line (for both arrays and objects).",
+            "type": "integer",
+            "default": 1
+          },
+          "neatJSON.spacesBeforeOneLineColons": {
+            "description": "Number of spaces before a colon when the object is on one line.",
+            "type": "integer",
+            "default": 0
+          },
+          "neatJSON.spacesAfterOneLineColons": {
+            "description": "Number of spaces after a colon when the object is on one line.",
+            "type": "integer",
+            "default": 0
+          },
+          "neatJSON.spacesBeforeMultilineColons": {
+            "description": "Number of spaces before a colon when the object is on multiple lines.",
+            "type": "integer",
+            "default": 1
+          },
+          "neatJSON.spacesAfterMultilineColons": {
+            "description": "Number of spaces after a colon when the object is on multiple lines.",
+            "type": "integer",
+            "default": 1
+          },
+          "neatJSON.formatDecimals": {
+            "description": "Round non-integer numbers to have a limited number of decimals?",
+            "type": "boolean",
+            "default": false
+          },
+          "neatJSON.formatDecimals.precision": {
+            "description": "Decimal precision for non-integer numbers.",
+            "type": "integer",
+            "default": 6
+          },
+          "neatJSON.formatDecimals.trimTrailingZeros": {
+            "markdownDescription": "Remove extra zeros at the end of floats? e.g. `1.2000` becomes `1.2`",
+            "type": "boolean",
+            "default": true
+          },
+          "neatJSON.forceFloats": {
+            "markdownDescription": "Force every integer value written to the file to be a float? e.g. `12` becomes `12.0`",
+            "type": "boolean",
+            "default": false
+          },
+          "neatJSON.forceFloatsIn": {
+            "markdownDescription": "An array of object key names under which all integer values are treated as floats.",
+            "type": "array",
+            "default": null
+          }
+        }
+      },
+      {
+        "title": "Named Formatters",
+        "properties": {
+          "neatJSON.formatters" : {
+            "description": "Create sets of named formatting options to re-use.",
+            "type":"object",
+            "default":{
+              "Compact":{
+                "wrap":false,
+                "decimals":3,
+                "trimTrailingZeros":true
+              },
+              "Short 'n' Wide":{
+                "wrap":120,
+                "short":true,
+                "aligned":true,
+                "afterComma":1,
+                "beforeColonN":1,
+                "afterColonN":1
+              },
+              "Vanilla":{
+                "wrap":80,
+                "indent":"    ",
+                "afterComma":1
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.1",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.76.0",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "@vscode/test-electron": "^2.2.2",
+    "eslint": "^8.33.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.1.0",
+    "neatjson": "^0.10.5",
+    "typescript": "^4.9.4"
+  }
+}
