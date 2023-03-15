@@ -1,72 +1,71 @@
-# NeatJSON README
-
-A flexible formatter for JSON that supports a large number
-of configuration options.
+A flexible formatter for JSON with a large number of configuration options.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+* Reformat an entire document, or just a selection of JSON
+* Save sets of formatting options and easily switch between them. For example:
+  * One setting to make file sizes as small as possible, reducing float precision.
+  * Another setting to make it easy to read, sorting object keys and aligning values.
+  * One setting for inline documentation, wrapping to only 60 characters wide.
+* Visit http://phrogz.net/JS/NeatJSON/ for a live example of the formatting
+  options available.
 
-For example if there is an image subfolder under your extension project workspace:
+## Available Commands
 
-\!\[feature X\]\(images/feature-x.png\)
+* `NeatJSON: Format Document` (`neatJSON.formatDocument`) —
+  Reformats the entire document using the current formatting settings.
+  Only available if the document format is `JSON` (not `JSONC`).
+* `NeatJSON: Format Selection` (`neatJSON.formatSelection`) —
+  Reformats the selected text as JSON, using the current formatting settings.
+* `NeatJSON: Format With…` (`neatJSON.formatWith`) —
+  Format the current document or selection, picking a different predefined
+  formatting setting to use. The new formatting settings will be used for
+  future commands (unless this command is invoked again).
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Formatting Settings
 
-## Requirements
+The "Default Formatting" settings group provides control over what formatting is
+applied by default, when no other predefined formatting settings have been selected.
+Each of the 22 options has a hopefully-adequate description describing its use.
+If they are not clear, perhaps try
+[the online version of NeatJSON](http://phrogz.net/JS/NeatJSON/) and play with
+the options there on some sample data.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+To create your on named presets, find the "Neat JSON: Formatters" setting in the
+"Named Formatters" section of the settings  and click on "Edit in settings.json".
 
-## Extension Settings
+By default your settings will be populated with the example named formatters that
+ship with the extension. You can add your own predefined settings to this object.
+See [the options described here](https://github.com/Phrogz/NeatJSON/blob/master/README.md#options)
+for details on the settings you can use.
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+If you do not want some of the predefined names and delete them, they will still
+show up due to the way VS Code's settings work (merging defaults with your overrides).
+To remove the predefined settings, you must set them to have the key/value `"hide":true`.
+For example, the following will hide all predefined and show only those you add:
 
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+```jsonc
+"neatJSON.formatters": {
+    "Vanilla, 4 spaces"                       : {"hide":true},
+    "Vanilla, Tabs"                           : {"hide":true},
+    "Short 'n' Wide"                          : {"hide":true},
+    "No Whitespace"                           : {"hide":true},
+    "Compact (no whitespace, max 3 decimals)" : {"hide":true},
+    // your settings here
+},
+```
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+The extension currently uses `JSON.parse()` to parse your document/selected
+text before reformatting it. Unfortunately, this does not support formatting
+using JSONC (JSON with comments) or JavaScript object literals
+(unquoted identifiers, trailing commas). As a workaround, you can use the 
+[online version](http://phrogz.net/JS/NeatJSON/)
+to parse those formats into true JSON, and use this tool from there.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### v0.5.0 (2023-Mar-15)
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release.

@@ -41,7 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
 async function selectFormatter() {
 	const conf = vscode.workspace.getConfiguration('neatJSON');
 	const formatters : any = conf.get('formatters') || {};
-	const names = Object.keys(formatters);
+	const names = Object.keys(formatters).filter(name => !formatters[name].hide);
 	names.unshift('(custom values from settings)');
 	let name = await vscode.window.showQuickPick(names);
 	if (name !== undefined) {
@@ -80,8 +80,14 @@ function formatSelection() {
 
 function format(json: string) : string | undefined {
 	try {
+		const start = Date.now();
 		const value = JSON.parse(json);
-		return neatJSON(value, activeFormatter);
+		const json2 = neatJSON(value, activeFormatter);
+		const finish = Date.now();
+		const summary = `NeatJSON: ${formatBytes(json.length)} → ${formatBytes(json2.length)} in ${finish-start}ms`;
+		// vscode.window.showInformationMessage(summary);
+		console.info(summary);
+		return json2;
 	} catch (e) {
 		console.log({error:e});
 		vscode.window.showWarningMessage('Does not parse as JSON.');
@@ -120,5 +126,13 @@ function formatterFromDefaultOptions() : NeatJSONOptions {
 	return format;
 }
 
-// This method is called when your extension is deactivated
 export function deactivate() {}
+
+// Adapted from https://stackoverflow.com/a/18650828/405017
+function formatBytes(bytes:number, decimals=1) {
+	if (!+bytes) return '0 bytes';
+	const k = 1024, i = Math.floor(Math.log(bytes) / Math.log(k));
+	if (i === 0) return `${bytes} bytes`;
+	const units = [, 'KiB', 'MiB', 'GiB', 'TiB'];
+	return `${(bytes / Math.pow(k, i)).toFixed(decimals < 0 ? 0 : decimals)} ${units[i]}`;
+}

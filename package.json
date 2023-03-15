@@ -54,107 +54,128 @@
           "neatJSON.wrapLines": {
             "description": "Wrap long lines?",
             "type": "boolean",
-            "default": true
+            "default": true,
+            "order": 0
           },
           "neatJSON.wrapLines.wrapWidth": {
             "description": "Wrap lines after this many characters",
             "type": "integer",
-            "default": 80
+            "default": 80,
+            "order": 1
           },
           "neatJSON.indent.usingTabs": {
             "description": "Use tabs instead of spaces for indentation?",
             "type": "boolean",
-            "default": true
+            "default": true,
+            "order": 2
           },
           "neatJSON.indent.amount": {
             "description": "Number of spaces or tabs to use at each indent level",
             "type": "integer",
-            "default": 1
+            "default": 1,
+            "order": 3
           },
           "neatJSON.indent.indentLast": {
             "description": "Indent the closing bracket/brace for arrays and objects?",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "order": 4
           },
           "neatJSON.short": {
             "description": "Put opening brackets on the same line as the first value, closing brackets on the same line as the last value?",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "order": 5
           },
           "neatJSON.sort": {
             "description": "Sort objects' keys in alphabetical order?",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "order": 6
           },
           "neatJSON.alignColons": {
             "description": "When wrapping objects, line up the colons (per object)?",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "order": 7
           },
           "neatJSON.arrayPadding": {
             "markdownDescription": "Number of spaces to put inside brackets for arrays.",
             "type": "integer",
-            "default": 0
+            "default": 0,
+            "order": 8
           },
           "neatJSON.objectPadding": {
             "description": "Number of spaces to put inside braces for objects.",
             "type": "integer",
-            "default": 0
+            "default": 0,
+            "order": 9
           },
           "neatJSON.spacesBeforeCommas": {
             "description": "Number of spaces to put before commas for values on the same line (for both arrays and objects).",
             "type": "integer",
-            "default": 0
+            "default": 0,
+            "order": 10
           },
           "neatJSON.spacesAfterCommas": {
             "description": "Number of spaces to put after commas for values on the same line (for both arrays and objects).",
             "type": "integer",
-            "default": 1
+            "default": 1,
+            "order": 11
           },
           "neatJSON.spacesBeforeOneLineColons": {
             "description": "Number of spaces before a colon when the object is on one line.",
             "type": "integer",
-            "default": 0
+            "default": 0,
+            "order": 12
           },
           "neatJSON.spacesAfterOneLineColons": {
             "description": "Number of spaces after a colon when the object is on one line.",
             "type": "integer",
-            "default": 0
+            "default": 0,
+            "order": 13
           },
           "neatJSON.spacesBeforeMultilineColons": {
             "description": "Number of spaces before a colon when the object is on multiple lines.",
             "type": "integer",
-            "default": 1
+            "default": 1,
+            "order": 14
           },
           "neatJSON.spacesAfterMultilineColons": {
             "description": "Number of spaces after a colon when the object is on multiple lines.",
             "type": "integer",
-            "default": 1
+            "default": 1,
+            "order": 15
           },
           "neatJSON.formatDecimals": {
             "description": "Round non-integer numbers to have a limited number of decimals?",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "order": 16
           },
           "neatJSON.formatDecimals.precision": {
-            "description": "Decimal precision for non-integer numbers.",
+            "description": "Maximum number of decimals to display for non-integer numbers.",
             "type": "integer",
-            "default": 6
+            "default": 6,
+            "order": 17
           },
           "neatJSON.formatDecimals.trimTrailingZeros": {
             "markdownDescription": "Remove extra zeros at the end of floats? e.g. `1.2000` becomes `1.2`",
             "type": "boolean",
-            "default": true
+            "default": true,
+            "order": 18
           },
           "neatJSON.forceFloats": {
             "markdownDescription": "Force every integer value written to the file to be a float? e.g. `12` becomes `12.0`",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "order": 19
           },
           "neatJSON.forceFloatsIn": {
-            "markdownDescription": "An array of object key names under which all integer values are treated as floats.",
+            "markdownDescription": "An array of object key names under which all integer values are treated as floats.\n\nFor example, serializing  \n`{\"a\":[1, 2, {\"a\":3, \"b\":4}], \"c\":{\"a\":5, \"d\":6}`  \nwith  \n`\"neatJSON.forceFloatsIn\":['a']`  \nwould produce  \n`{\"a\":[1.0, 2.0, {\"a\":3.0, \"b\":4}], \"c\":{\"a\":5.0, \"d\":6}}`.",
             "type": "array",
-            "default": null
+            "default": [],
+            "order": 20
           }
         }
       },
@@ -162,13 +183,18 @@
         "title": "Named Formatters",
         "properties": {
           "neatJSON.formatters" : {
-            "description": "Create sets of named formatting options to re-use.",
+            "markdownDescription": "Create sets of named formatting options to re-use.\n\nFor valid settings, see the [NeatJSON Documentation](https://github.com/Phrogz/NeatJSON/blob/master/README.md#options), or use [the online tool](http://phrogz.net/JS/NeatJSON/) to set options and copy the options shown above the output.",
             "type":"object",
             "default":{
-              "Compact":{
-                "wrap":false,
-                "decimals":3,
-                "trimTrailingZeros":true
+              "Vanilla, 4 spaces":{
+                "wrap":80,
+                "indent":"    ",
+                "afterComma":1
+              },
+              "Vanilla, Tabs":{
+                "wrap":80,
+                "indent":"\t",
+                "afterComma":1
               },
               "Short 'n' Wide":{
                 "wrap":120,
@@ -178,10 +204,13 @@
                 "beforeColonN":1,
                 "afterColonN":1
               },
-              "Vanilla":{
-                "wrap":80,
-                "indent":"    ",
-                "afterComma":1
+              "No Whitespace": {
+                "wrap": false
+              },
+              "Compact (no whitespace, max 3 decimals)":{
+                "wrap":false,
+                "decimals":3,
+                "trimTrailingZeros":true
               }
             }
           }
