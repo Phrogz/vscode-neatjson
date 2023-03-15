@@ -3,14 +3,22 @@
   "displayName": "NeatJSON",
   "description": "JSON formatter with great configurability",
   "version": "0.5.0",
+  "publisher": "Phrogz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Phrogz/vscode-neatjson.git"
+  },
+  "homepage": "https://github.com/Phrogz/vscode-neatjson/README.md",
+  "bugs": {
+    "url": "https://github.com/Phrogz/vscode-neatjson/issues",
+    "email": "gavin@phrogz.net"
+  },
   "engines": {
-    "vscode": "^1.76.0"
+    "vscode": "^1.74.0"
   },
   "categories": [
     "Other"
-  ],
-  "activationEvents": [
-    "onCommand:neatJSON.helloWorld"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -222,13 +230,13 @@
     "vscode:prepublish": "npm run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
-    "lint": "eslint src --ext ts",
+    "lint": "eslint src --ext ts"
   },
   "devDependencies": {
     "@types/glob": "^8.0.1",
     "@types/mocha": "^10.0.1",
     "@types/node": "16.x",
-    "@types/vscode": "^1.76.0",
+    "@types/vscode": "^1.74.0",
     "@typescript-eslint/eslint-plugin": "^5.49.0",
     "@typescript-eslint/parser": "^5.49.0",
     "@vscode/test-electron": "^2.2.2",
