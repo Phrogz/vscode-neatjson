@@ -2,7 +2,7 @@
   "name": "neatJSON",
   "displayName": "NeatJSON",
   "description": "JSON formatter with great configurability",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "publisher": "Phrogz",
   "license": "MIT",
   "repository": {
@@ -190,35 +190,35 @@
       {
         "title": "Named Formatters",
         "properties": {
-          "neatJSON.formatters" : {
+          "neatJSON.formatters": {
             "markdownDescription": "Create sets of named formatting options to re-use.\n\nFor valid settings, see the [NeatJSON Documentation](https://github.com/Phrogz/NeatJSON/blob/master/README.md#options), or use [the online tool](http://phrogz.net/JS/NeatJSON/) to set options and copy the options shown above the output.",
-            "type":"object",
-            "default":{
-              "Vanilla, 4 spaces":{
-                "wrap":80,
-                "indent":"    ",
-                "afterComma":1
+            "type": "object",
+            "default": {
+              "Vanilla, 4 spaces": {
+                "wrap": 80,
+                "indent": "    ",
+                "afterComma": 1
               },
-              "Vanilla, Tabs":{
-                "wrap":80,
-                "indent":"\t",
-                "afterComma":1
+              "Vanilla, Tabs": {
+                "wrap": 80,
+                "indent": "\t",
+                "afterComma": 1
               },
-              "Short 'n' Wide":{
-                "wrap":120,
-                "short":true,
-                "aligned":true,
-                "afterComma":1,
-                "beforeColonN":1,
-                "afterColonN":1
+              "Short 'n' Wide": {
+                "wrap": 120,
+                "short": true,
+                "aligned": true,
+                "afterComma": 1,
+                "beforeColonN": 1,
+                "afterColonN": 1
               },
               "No Whitespace": {
                 "wrap": false
               },
-              "Compact (no whitespace, max 3 decimals)":{
-                "wrap":false,
-                "decimals":3,
-                "trimTrailingZeros":true
+              "Compact (no whitespace, max 3 decimals)": {
+                "wrap": false,
+                "decimals": 3,
+                "trimTrailingZeros": true
               }
             }
           }
