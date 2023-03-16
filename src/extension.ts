@@ -35,7 +35,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(vscode.commands.registerCommand('neatJSON.formatWith', selectFormatter));
 	context.subscriptions.push(vscode.commands.registerCommand('neatJSON.formatDocument', formatDocument));
-	context.subscriptions.push(vscode.commands.registerCommand('neatJSON.formatSelection', formatSelection));
+	context.subscriptions.push(vscode.commands.registerCommand('neatJSON.formatSelection', formatSelections));
 }
 
 async function selectFormatter() {
@@ -45,11 +45,13 @@ async function selectFormatter() {
 	names.unshift('(custom values from settings)');
 	let name = await vscode.window.showQuickPick(names);
 	if (name !== undefined) {
-		activeFormatter = formatters[name] || formatterFromDefaultOptions();
+		// It is necessary to copy these values to a true object, otherwise a Proxy from settings is used
+		// which does not behave as neatJSON expects. (Setting `opts.foo=1` fails a later `if ('foo' in opts)` test.)
+		activeFormatter = Object.assign({}, formatters[name] || formatterFromDefaultOptions());
 		console.info(`neatJSON Settings`, activeFormatter);
 
 		const hasSelection = vscode.window.activeTextEditor && !vscode.window.activeTextEditor.selection.isEmpty;
-		if (hasSelection) formatSelection();
+		if (hasSelection) formatSelections();
 		else              formatDocument();
 	}
 }
@@ -67,14 +69,24 @@ function formatDocument() {
 	}
 }
 
-function formatSelection() {
+function formatSelections() {
+	interface Replacement {range:vscode.Range, text:string};
 	const editor = vscode.window.activeTextEditor;
-	const selection = editor?.selection;
-	if (selection && !selection.isEmpty) {
-		const selectionRange = new vscode.Range(selection.start.line, selection.start.character, selection.end.line, selection.end.character);
-		const selectedText = editor.document.getText(selectionRange);
-		const formatted = format(selectedText);
-		if (formatted !== undefined) editor.edit(edit => edit.replace(selectionRange, formatted));
+	const selections = editor?.selections;
+	if (editor && selections) {
+		const replacements:Replacement[] = [];
+		for (const selection of selections.filter(s => !s.isEmpty)) {
+			const range = new vscode.Range(selection.start.line, selection.start.character, selection.end.line, selection.end.character);
+			const original = editor.document.getText(range);
+			const newjson = format(original);
+			if (newjson) replacements.push({range, text:newjson});
+		}
+		// We have to do all the replacements in a single edit callback, so cannot do this in the loop above
+		editor.edit(edit => {
+			for (const {range, text} of replacements) {
+				edit.replace(range, text);
+			}
+		});
 	}
 }
 

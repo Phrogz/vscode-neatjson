@@ -1,5 +1,7 @@
 A flexible formatter for JSON with a large number of configuration options.
 
+![demo of formatting the document a couple ways](doc/formatting-document.gif)
+
 ## Features
 
 * Reformat an entire document, or just a selection of JSON
@@ -12,12 +14,12 @@ A flexible formatter for JSON with a large number of configuration options.
 
 ## Available Commands
 
-* `NeatJSON: Format Document` (`neatJSON.formatDocument`) —
+* `NeatJSON: Format Document` —
   Reformats the entire document using the current formatting settings.
   Only available if the document format is `JSON` (not `JSONC`).
-* `NeatJSON: Format Selection` (`neatJSON.formatSelection`) —
+* `NeatJSON: Format Selection` —
   Reformats the selected text as JSON, using the current formatting settings.
-* `NeatJSON: Format With…` (`neatJSON.formatWith`) —
+* `NeatJSON: Format With…` —
   Format the current document or selection, picking a different predefined
   formatting setting to use. The new formatting settings will be used for
   future commands (unless this command is invoked again).
@@ -31,7 +33,11 @@ If they are not clear, perhaps try
 [the online version of NeatJSON](http://phrogz.net/JS/NeatJSON/) and play with
 the options there on some sample data.
 
-To create your on named presets, find the "Neat JSON: Formatters" setting in the
+You can also create your own custom named formatters:
+
+![demo of custom formatters on selections](doc/formatting-selection.gif)
+
+To create your own named presets, find the "Neat JSON: Formatters" setting in the
 "Named Formatters" section of the settings  and click on "Edit in settings.json".
 
 By default your settings will be populated with the example named formatters that
@@ -65,6 +71,10 @@ using JSONC (JSON with comments) or JavaScript object literals
 to parse those formats into true JSON, and use this tool from there.
 
 ## Release Notes
+
+### v0.6.0 (2023-Mar-16)
+
+Supports formatting multiple selections at the same time.
 
 ### v0.5.0 (2023-Mar-15)
 
