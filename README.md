@@ -22,14 +22,17 @@ A flexible formatter for JSON with a large number of configuration options.
 * `NeatJSON: Format With…` —
   Format the current document or selection, picking a different predefined
   formatting setting to use. The new formatting settings will be used for
-  future commands (unless this command is invoked again).
+  future commands (unless this command is invoked again).  
+  ![named formatters](doc/default-formatters.png)
 
 ## Formatting Settings
 
+![settings screenshot](doc/settings.png)
+
 The "Default Formatting" settings group provides control over what formatting is
 applied by default, when no other predefined formatting settings have been selected.
-Each of the 22 options has a hopefully-adequate description describing its use.
-If they are not clear, perhaps try
+Each of the 22 options has an explanation describing its use.
+If the descriptions are not clear, perhaps try
 [the online version of NeatJSON](http://phrogz.net/JS/NeatJSON/) and play with
 the options there on some sample data.
 
