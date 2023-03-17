@@ -2,6 +2,7 @@ A flexible formatter for JSON with a large number of configuration options.
 
 ![demo of formatting the document a couple ways](doc/formatting-document.gif)
 
+
 ## Features
 
 * Reformat an entire document, or just a selection of JSON
@@ -11,6 +12,7 @@ A flexible formatter for JSON with a large number of configuration options.
   * One setting for inline documentation, wrapping to only 60 characters wide.
 * Visit http://phrogz.net/JS/NeatJSON/ for a live example of the formatting
   options available.
+
 
 ## Available Commands
 
@@ -24,6 +26,7 @@ A flexible formatter for JSON with a large number of configuration options.
   formatting setting to use. The new formatting settings will be used for
   future commands (unless this command is invoked again).  
   ![named formatters](doc/default-formatters.png)
+
 
 ## Formatting Settings
 
@@ -64,6 +67,7 @@ For example, the following will hide all predefined and show only those you add:
 },
 ```
 
+
 ## Known Issues
 
 The extension currently uses `JSON.parse()` to parse your document/selected
@@ -72,6 +76,7 @@ using JSONC (JSON with comments) or JavaScript object literals
 (unquoted identifiers, trailing commas). As a workaround, you can use the 
 [online version](http://phrogz.net/JS/NeatJSON/)
 to parse those formats into true JSON, and use this tool from there.
+
 
 ## Release Notes
 
