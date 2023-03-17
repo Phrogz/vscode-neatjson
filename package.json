@@ -2,7 +2,7 @@
   "name": "neatJSON",
   "displayName": "NeatJSON",
   "description": "JSON formatter with great configurability",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "publisher": "Phrogz",
   "license": "MIT",
   "repository": {
@@ -43,7 +43,7 @@
       "commandPalette": [
         {
           "command": "neatJSON.formatDocument",
-          "when": "editorLangId == json"
+          "when": "editorLangId == json || editorLangId == jsonc || editorLangId == json5"
         },
         {
           "command": "neatJSON.formatSelection",
@@ -51,7 +51,7 @@
         },
         {
           "command": "neatJSON.formatWith",
-          "when": "editorLangId == json || editorHasSelection"
+          "when": "editorLangId == json || editorLangId == jsonc || editorLangId == json5 || editorHasSelection"
         }
       ]
     },
@@ -233,7 +233,8 @@
     "lint": "eslint src --ext ts"
   },
   "dependencies": {
-    "neatjson": "^0.10.5"
+    "json5": "^2.2.3",
+    "neatjson": "^0.10.6"
   },
   "devDependencies": {
     "@types/glob": "^8.0.1",

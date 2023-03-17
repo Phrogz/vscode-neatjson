@@ -1,5 +1,5 @@
 /* eslint-disable curly */
-// @ts-ignore
+import {parse} from 'json5';
 import {neatJSON} from 'neatjson';
 import * as vscode from 'vscode';
 
@@ -92,7 +92,7 @@ function formatSelections() {
 function format(json: string) : string | undefined {
 	try {
 		const start = Date.now();
-		const value = JSON.parse(json);
+		const value = parse(json);
 		const json2 = neatJSON(value, activeFormatter);
 		const finish = Date.now();
 		const summary = `NeatJSON: ${formatBytes(json.length)} → ${formatBytes(json2.length)} in ${finish-start}ms`;
@@ -100,8 +100,12 @@ function format(json: string) : string | undefined {
 		console.info(summary);
 		return json2;
 	} catch (e) {
-		console.log({error:e});
-		vscode.window.showWarningMessage('Does not parse as JSON.');
+		let message = "Error parsing";
+		if (e instanceof SyntaxError) {
+			console.log(e.message);
+			message += `: ${e.message}`;
+		}
+		vscode.window.showWarningMessage(message);
 	}
 }
 
@@ -110,8 +114,8 @@ function formatterFromDefaultOptions() : NeatJSONOptions {
 	const format:NeatJSONOptions = {};
 	if (!conf.get('wrapLines')) format.wrap = false;
 	else {
-		format.wrap       = conf.get('wrapLines.wrapWidth');
 		format.indent     = (conf.get('indent.usingTabs') ? '\t' : ' ').repeat(conf.get('indent.amount') || 0);
+		format.wrap       = conf.get('wrapLines.wrapWidth');
 		format.indentLast = conf.get('indent.indentLast');
 		format.short      = conf.get('short');
 		format.sort       = conf.get('sort');
@@ -125,10 +129,9 @@ function formatterFromDefaultOptions() : NeatJSONOptions {
 	format.afterColon1   = conf.get('spacesAfterOneLineColons');
 	format.beforeColonN  = conf.get('spacesBeforeMultilineColons');
 	format.afterColonN   = conf.get('spacesAfterMultilineColons');
-
 	format.forceFloats   = conf.get('forceFloats');
-	if (conf.get('forceFloatsIn')) format.forceFloatsIn = conf.get('forceFloatsIn');
 
+	if (conf.get('forceFloatsIn')) format.forceFloatsIn = conf.get('forceFloatsIn');
 	if (conf.get('formatDecimals')) {
 		format.decimals          = conf.get('formatDecimals.precision');
 		format.trimTrailingZeros = conf.get('formatDecimals.trimTrailingZeros');

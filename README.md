@@ -5,7 +5,7 @@ A flexible formatter for JSON with a large number of configuration options.
 
 ## Features
 
-* Reformat an entire document, or just a selection of JSON
+* Reformat an entire document, or just a selection of JSON/JSONC/JSON5/JS
 * Save sets of formatting options and easily switch between them. For example:
   * One setting to make file sizes as small as possible, reducing float precision.
   * Another setting to make it easy to read, sorting object keys and aligning values.
@@ -68,17 +68,13 @@ For example, the following will hide all predefined and show only those you add:
 ```
 
 
-## Known Issues
-
-The extension currently uses `JSON.parse()` to parse your document/selected
-text before reformatting it. Unfortunately, this does not support formatting
-using JSONC (JSON with comments) or JavaScript object literals
-(unquoted identifiers, trailing commas). As a workaround, you can use the 
-[online version](http://phrogz.net/JS/NeatJSON/)
-to parse those formats into true JSON, and use this tool from there.
-
-
 ## Release Notes
+
+### v0.7 (2023-Mar-17)
+
+Parse JSON5 as the source (unquoted object keys, trailing commas, comments,
+single-quoted strings, etc.) instead of only accepting JSON.
+
 
 ### v0.6.2 (2023-Mar-17)
 
