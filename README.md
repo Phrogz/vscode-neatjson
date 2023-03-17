@@ -75,9 +75,15 @@ to parse those formats into true JSON, and use this tool from there.
 
 ## Release Notes
 
+### v0.6.2 (2023-Mar-17)
+
+First published release that actually works. (Oops.)
+
+
 ### v0.6.0 (2023-Mar-16)
 
 Supports formatting multiple selections at the same time.
+
 
 ### v0.5.0 (2023-Mar-15)
 

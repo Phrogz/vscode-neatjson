@@ -32,7 +32,6 @@ interface NeatJSONOptions {
 let activeFormatter: NeatJSONOptions;
 export function activate(context: vscode.ExtensionContext) {
 	activeFormatter = formatterFromDefaultOptions();
-
 	context.subscriptions.push(vscode.commands.registerCommand('neatJSON.formatWith', selectFormatter));
 	context.subscriptions.push(vscode.commands.registerCommand('neatJSON.formatDocument', formatDocument));
 	context.subscriptions.push(vscode.commands.registerCommand('neatJSON.formatSelection', formatSelections));
